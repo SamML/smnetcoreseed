@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using smnetcoreseed.web.Data;
+using smnetcoreseed.core.Data.Identity;
 using System;
 
-namespace smnetcoreseed.web.Migrations
+namespace smnetcoreseed.core.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170911010312_smnetcoreseed-applicationdbcontext-start")]
-    partial class smnetcoreseedapplicationdbcontextstart
+    [DbContext(typeof(CoreIdentityDbContext))]
+    [Migration("20170916195030_startCoreIdentityContextDb")]
+    partial class startCoreIdentityContextDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,30 +20,6 @@ namespace smnetcoreseed.web.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
@@ -129,7 +105,59 @@ namespace smnetcoreseed.web.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("smnetcoreseed.core.Models.ApplicationUser", b =>
+            modelBuilder.Entity("smnetcoreseed.core.DomainModels.CoreIdentityClaim", b =>
+                {
+                    b.Property<string>("ClaimId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CoreIdentityRoleId");
+
+                    b.HasKey("ClaimId");
+
+                    b.HasIndex("CoreIdentityRoleId");
+
+                    b.ToTable("CoreIdentityClaim");
+                });
+
+            modelBuilder.Entity("smnetcoreseed.core.DomainModels.CoreIdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("CoreIdentityUserId");
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("IPAddress");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("RoleId");
+
+                    b.Property<string>("Users");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoreIdentityUserId");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("smnetcoreseed.core.DomainModels.CoreIdentityUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -143,6 +171,10 @@ namespace smnetcoreseed.web.Migrations
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FullName");
+
+                    b.Property<bool>("IsEnabled");
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -182,7 +214,7 @@ namespace smnetcoreseed.web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("smnetcoreseed.core.DomainModels.CoreIdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -190,7 +222,7 @@ namespace smnetcoreseed.web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("smnetcoreseed.core.Models.ApplicationUser")
+                    b.HasOne("smnetcoreseed.core.DomainModels.CoreIdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -198,7 +230,7 @@ namespace smnetcoreseed.web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("smnetcoreseed.core.Models.ApplicationUser")
+                    b.HasOne("smnetcoreseed.core.DomainModels.CoreIdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -206,12 +238,12 @@ namespace smnetcoreseed.web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("smnetcoreseed.core.DomainModels.CoreIdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("smnetcoreseed.core.Models.ApplicationUser")
+                    b.HasOne("smnetcoreseed.core.DomainModels.CoreIdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -219,10 +251,24 @@ namespace smnetcoreseed.web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("smnetcoreseed.core.Models.ApplicationUser")
+                    b.HasOne("smnetcoreseed.core.DomainModels.CoreIdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("smnetcoreseed.core.DomainModels.CoreIdentityClaim", b =>
+                {
+                    b.HasOne("smnetcoreseed.core.DomainModels.CoreIdentityRole")
+                        .WithMany("Claims")
+                        .HasForeignKey("CoreIdentityRoleId");
+                });
+
+            modelBuilder.Entity("smnetcoreseed.core.DomainModels.CoreIdentityRole", b =>
+                {
+                    b.HasOne("smnetcoreseed.core.DomainModels.CoreIdentityUser")
+                        .WithMany("Roles")
+                        .HasForeignKey("CoreIdentityUserId");
                 });
 #pragma warning restore 612, 618
         }

@@ -68,31 +68,29 @@ namespace smnetcoreseed.web
             services.AddDbContext<CoreRepositoriesDbContext>(options =>
            options.UseSqlServer(Configuration.GetConnectionString("CoreRepositoriesDbContextConnection")));
 
-            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
-            {
+            //services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+            //{
 
-                // User settings
-                options.User.RequireUniqueEmail = true;
+            //    // User settings
+            //    options.User.RequireUniqueEmail = true;
 
-            //    //// Password settings
-            options.Password.RequireDigit = false;
-            options.Password.RequiredLength = 8;
-            options.Password.RequireNonAlphanumeric = false;
-            options.Password.RequireUppercase = false;
-            options.Password.RequireLowercase = false;
+            //    //    //// Password settings
+            //    options.Password.RequireDigit = false;
+            //    options.Password.RequiredLength = 8;
+            //    options.Password.RequireNonAlphanumeric = false;
+            //    options.Password.RequireUppercase = false;
+            //    options.Password.RequireLowercase = false;
 
-            //    //// Lockout settings
-            //    //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-            //    //options.Lockout.MaxFailedAccessAttempts = 10;
+            //    //    //// Lockout settings
+            //    //    //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+            //    //    //options.Lockout.MaxFailedAccessAttempts = 10;
 
-            //options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
-            //options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
-            //options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
-        })
-                .AddEntityFrameworkStores<CoreRepositoriesDbContext>()
-                .AddDefaultTokenProviders();
-
-
+            //    //options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
+            //    //options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
+            //    //options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
+            //})
+            //    .AddEntityFrameworkStores<CoreRepositoriesDbContext>()
+            //    .AddDefaultTokenProviders();
 
 
 
@@ -100,7 +98,9 @@ namespace smnetcoreseed.web
 
 
 
-        services.AddTransient<IEmailSender, EmailSender>();
+
+
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
 
@@ -112,49 +112,49 @@ namespace smnetcoreseed.web
 
             // Add CookieTempDataProvider after AddMvc and include ViewFeatures.
             // using Microsoft.AspNetCore.Mvc.ViewFeatures;
-            //services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
+            services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
 
             //ADD AUTHORIZATION OPTIONS
 
 
-            //services.AddAuthorization(options =>
-            //{
+            services.AddAuthorization(options =>
+            {
 
-            //    //Set default authorization
-            //    options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireRole("administrator").Build();
+                //Set default authorization
+                options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireRole("administrator").Build();
 
-            //    options.AddPolicy(AuthPolicies.ViewUserByUserIdPolicy, policy => policy.Requirements.Add(new ViewUserByIdRequirement()));
+                options.AddPolicy(AuthPolicies.ViewUserByUserIdPolicy, policy => policy.Requirements.Add(new ViewUserByIdRequirement()));
 
-            //    options.AddPolicy(AuthPolicies.ViewUsersPolicy, policy => policy.RequireClaim(CustomClaimTypes.Permission, AppPermissions.ViewUsers));
+                options.AddPolicy(AuthPolicies.ViewUsersPolicy, policy => policy.RequireClaim(CustomClaimTypes.Permission, AppPermissions.ViewUsers));
 
-            //    options.AddPolicy(AuthPolicies.ManageUserByUserIdPolicy, policy => policy.Requirements.Add(new ManageUserByIdRequirement()));
+                options.AddPolicy(AuthPolicies.ManageUserByUserIdPolicy, policy => policy.Requirements.Add(new ManageUserByIdRequirement()));
 
-            //    options.AddPolicy(AuthPolicies.ManageUsersPolicy, policy => policy.RequireClaim(CustomClaimTypes.Permission, AppPermissions.ManageUsers));
+                options.AddPolicy(AuthPolicies.ManageUsersPolicy, policy => policy.RequireClaim(CustomClaimTypes.Permission, AppPermissions.ManageUsers));
 
-            //    options.AddPolicy(AuthPolicies.ViewRoleByRoleNamePolicy, policy => policy.Requirements.Add(new ViewRoleByNameRequirement()));
+                options.AddPolicy(AuthPolicies.ViewRoleByRoleNamePolicy, policy => policy.Requirements.Add(new ViewRoleByNameRequirement()));
 
-            //    options.AddPolicy(AuthPolicies.ViewRolesPolicy, policy => policy.RequireClaim(CustomClaimTypes.Permission, AppPermissions.ViewRoles));
+                options.AddPolicy(AuthPolicies.ViewRolesPolicy, policy => policy.RequireClaim(CustomClaimTypes.Permission, AppPermissions.ViewRoles));
 
-            //    options.AddPolicy(AuthPolicies.AssignRolesPolicy, policy => policy.Requirements.Add(new AssignRolesRequirement()));
+                options.AddPolicy(AuthPolicies.AssignRolesPolicy, policy => policy.Requirements.Add(new AssignRolesRequirement()));
 
-            //    options.AddPolicy(AuthPolicies.ManageRolesPolicy, policy => policy.RequireClaim(CustomClaimTypes.Permission, AppPermissions.ManageRoles));
+                options.AddPolicy(AuthPolicies.ManageRolesPolicy, policy => policy.RequireClaim(CustomClaimTypes.Permission, AppPermissions.ManageRoles));
 
-            //    //options.AddPolicy("Users", policy => policy.RequireAuthenticatedUser().RequireRole("user"));
+                //options.AddPolicy("Users", policy => policy.RequireAuthenticatedUser().RequireRole("user"));
 
-            //    //options.AddPolicy("AddEditUser", policy => {
-            //    //    policy.RequireClaim("Add User", "Add User");
-            //    //    policy.RequireClaim("Edit User", "Edit User");
-            //    //});
-            //    //options.AddPolicy("DeleteUser", policy => policy.RequireClaim("Delete User", "Delete User"));
-            //});
+                //options.AddPolicy("AddEditUser", policy => {
+                //    policy.RequireClaim("Add User", "Add User");
+                //    policy.RequireClaim("Edit User", "Edit User");
+                //});
+                //options.AddPolicy("DeleteUser", policy => policy.RequireClaim("Delete User", "Delete User"));
+            });
 
             //set to apply default authorization for empty controllers and [Authorize] declarations (Default Auth declared above)
-            //services.TryAddEnumerable(ServiceDescriptor.Transient<IApplicationModelProvider, OverridableDefaultAuthorizationApplicationModelProvider>());
+            services.TryAddEnumerable(ServiceDescriptor.Transient<IApplicationModelProvider, OverridableDefaultAuthorizationApplicationModelProvider>());
 
-            //services.AddAuthentication();
+            services.AddAuthentication();
 
             // Add application services.
-          
+
 
             //ADD Account Manager Services
             services.AddScoped<ICoreAccountManager, CoreAccountManager>();
