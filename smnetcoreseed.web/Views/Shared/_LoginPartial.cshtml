@@ -1,8 +1,8 @@
 @using Microsoft.AspNetCore.Identity
 @using smnetcoreseed.core.DomainModels
 
-@inject SignInManager<CoreIdentityUser> SignInManager
-@inject UserManager<CoreIdentityUser> UserManager
+@inject SignInManager<smnetcoreseed.core.Models.ApplicationUser> SignInManager
+@inject UserManager<smnetcoreseed.core.Models.ApplicationRole> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {

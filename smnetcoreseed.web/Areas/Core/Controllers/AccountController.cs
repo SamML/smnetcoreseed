@@ -2,11 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using smnetcoreseed.core.DomainModels;
-
-using System.Threading.Tasks;
-
 using smnetcoreseed.core.DomainModels.AccountViewModels;
 using smnetcoreseed.web.Controllers;
+using System.Threading.Tasks;
 
 namespace smnetcoreseed.web.Areas.Core.Controllers
 {

@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using smnetcoreseed.core.Models;
+using smnetcoreseed.core.Extensions;
 using smnetcoreseed.core.Models.AccountViewModels;
 using smnetcoreseed.core.Services;
-using smnetcoreseed.core.Extensions;
 using smnetcoreseed.web.Controllers;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace smnetcoreseed.web.Areas.Account.Controllers
 {
@@ -23,14 +18,14 @@ namespace smnetcoreseed.web.Areas.Account.Controllers
     [Route("account")]
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<smnetcoreseed.core.Models.ApplicationUser> _userManager;
+        private readonly SignInManager<smnetcoreseed.core.Models.ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
 
         public AccountController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<smnetcoreseed.core.Models.ApplicationUser> userManager,
+            SignInManager<smnetcoreseed.core.Models.ApplicationUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger)
         {
@@ -232,7 +227,7 @@ namespace smnetcoreseed.web.Areas.Account.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new smnetcoreseed.core.Models.ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -326,7 +321,7 @@ namespace smnetcoreseed.web.Areas.Account.Controllers
                 {
                     throw new ApplicationException("Error loading external login information during confirmation.");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new smnetcoreseed.core.Models.ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -453,7 +448,6 @@ namespace smnetcoreseed.web.Areas.Account.Controllers
             return View();
         }
 
-
         [Route("[action]")]
         [HttpGet]
         public IActionResult AccessDenied()
@@ -483,6 +477,6 @@ namespace smnetcoreseed.web.Areas.Account.Controllers
             }
         }
 
-        #endregion
+        #endregion Helpers
     }
 }

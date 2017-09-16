@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using smnetcoreseed.core.Data.Repositories;
-using smnetcoreseed.core.Models.Repositories;
 using smnetcoreseed.core.Interfaces.Repositories;
+using smnetcoreseed.core.Models.Repositories;
 
 namespace smnetcoreseed.core.Extensions.Repositories
 {

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
-using System.Security.Claims;
 
 namespace smnetcoreseed.core.Models
 {
@@ -14,21 +13,17 @@ namespace smnetcoreseed.core.Models
         public DateTime CreatedDate { get; set; }
         public string IPAddress { get; set; }
 
-      
         public ApplicationRole()
         {
         }
 
-       
         public ApplicationRole(string roleName) : base(roleName)
         {
         }
 
-      
         public ApplicationRole(string roleName, string description) : base(roleName)
         {
             Description = description;
         }
-
     }
 }

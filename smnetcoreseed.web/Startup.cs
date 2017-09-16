@@ -1,56 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.SpaServices;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using smnetcoreseed.core.Models;
-using smnetcoreseed.core.Services;
-using Microsoft.Extensions.FileProviders;
-using System.IO;
-using smnetcoreseed.core.Data.Identity;
-using smnetcoreseed.core.DomainModels;
-using smnetcoreseed.core.Data.Repositories;
-using smnetcoreseed.core.Extensions.Repositories;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.Extensions.FileProviders;
+using smnetcoreseed.core.Data;
+using smnetcoreseed.core.Data.Identity;
+using smnetcoreseed.core.Data.Repositories;
+using smnetcoreseed.core.DomainModels;
 using smnetcoreseed.core.Extensions.Identity;
+using smnetcoreseed.core.Extensions.Repositories;
 using smnetcoreseed.core.Interfaces.Identity;
 using smnetcoreseed.core.Interfaces.Repositories;
-using smnetcoreseed.core.Data;
+using smnetcoreseed.core.Services;
+using System.IO;
 using AppPermissions = smnetcoreseed.core.Extensions.Repositories.ApplicationPermissions;
-
 
 namespace smnetcoreseed.web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
+            var builder = new ConfigurationBuilder()
+              .SetBasePath(env.ContentRootPath)
+              .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+              .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+            if (env.IsDevelopment())
+            {
+                // For more details on using the user secret store see https://go.microsoft.com/fwlink/?LinkID=532709
+                //builder.AddUserSecrets<Startup>();
+            }
+
+            builder.AddEnvironmentVariables();
+            Configuration = builder.Build();
             Configuration = configuration;
         }
 
+        public IConfigurationRoot ConfigurationRoot { get; }
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-
             // ADD DB CONTEXTS
             services.AddDbContext<CoreIdentityDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("CoreIdentityDbContextConnection")));
 
             services.AddIdentity<CoreIdentityUser, CoreIdentityRole>(options =>
             {
-
                 // User settings
                 options.User.RequireUniqueEmail = true;
 
@@ -60,7 +65,6 @@ namespace smnetcoreseed.web
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
-
             })
                 .AddEntityFrameworkStores<CoreIdentityDbContext>()
                 .AddDefaultTokenProviders();
@@ -68,47 +72,32 @@ namespace smnetcoreseed.web
             services.AddDbContext<CoreRepositoriesDbContext>(options =>
            options.UseSqlServer(Configuration.GetConnectionString("CoreRepositoriesDbContextConnection")));
 
-            //services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
-            //{
+            services.AddIdentity<smnetcoreseed.core.Models.ApplicationUser, smnetcoreseed.core.Models.ApplicationRole>(options =>
+           {
+                // User settings
+                options.User.RequireUniqueEmail = true;
 
-            //    // User settings
-            //    options.User.RequireUniqueEmail = true;
+                //    //// Password settings
+                options.Password.RequireDigit = false;
+               options.Password.RequiredLength = 8;
+               options.Password.RequireNonAlphanumeric = false;
+               options.Password.RequireUppercase = false;
+               options.Password.RequireLowercase = false;
 
-            //    //    //// Password settings
-            //    options.Password.RequireDigit = false;
-            //    options.Password.RequiredLength = 8;
-            //    options.Password.RequireNonAlphanumeric = false;
-            //    options.Password.RequireUppercase = false;
-            //    options.Password.RequireLowercase = false;
+                //    //// Lockout settings
+                //    //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                //    //options.Lockout.MaxFailedAccessAttempts = 10;
 
-            //    //    //// Lockout settings
-            //    //    //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-            //    //    //options.Lockout.MaxFailedAccessAttempts = 10;
-
-            //    //options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
-            //    //options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
-            //    //options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
-            //})
-            //    .AddEntityFrameworkStores<CoreRepositoriesDbContext>()
-            //    .AddDefaultTokenProviders();
-
-
-
-
-
-
-
-
+                //options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
+                //options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
+                //options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
+            })
+                .AddEntityFrameworkStores<CoreRepositoriesDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
-
-
-
-
-
-
 
             // Add CookieTempDataProvider after AddMvc and include ViewFeatures.
             // using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -116,10 +105,8 @@ namespace smnetcoreseed.web
 
             //ADD AUTHORIZATION OPTIONS
 
-
             services.AddAuthorization(options =>
             {
-
                 //Set default authorization
                 options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireRole("administrator").Build();
 
@@ -151,10 +138,9 @@ namespace smnetcoreseed.web
             //set to apply default authorization for empty controllers and [Authorize] declarations (Default Auth declared above)
             services.TryAddEnumerable(ServiceDescriptor.Transient<IApplicationModelProvider, OverridableDefaultAuthorizationApplicationModelProvider>());
 
-            services.AddAuthentication();
+            //services.AddAuthentication();
 
             // Add application services.
-
 
             //ADD Account Manager Services
             services.AddScoped<ICoreAccountManager, CoreAccountManager>();
@@ -169,7 +155,6 @@ namespace smnetcoreseed.web
             // DB Creation and Seeding
             services.AddTransient<IDatabaseInitializer, CoreIdentityDbInitializer>();
             services.AddTransient<IDatabaseInitializer, CoreRepositoriesDbInitializer>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -194,7 +179,6 @@ namespace smnetcoreseed.web
                 RequestPath = "/node_modules"
             });
 
-
             app.UseAuthentication();
 
             app.UseMvc(routes =>
@@ -207,8 +191,6 @@ namespace smnetcoreseed.web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-
-              
 
                 routes.MapSpaFallbackRoute("spa-fallback", new { controller = "Home", action = "Index" });
             });

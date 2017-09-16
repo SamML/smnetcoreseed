@@ -69,21 +69,17 @@
 /******/ ([
 /* 0 */
 /***/ (function(module, exports) {
-
 module.exports = require("./vendor");
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(3);
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var NS = exports.NAMESPACES = {
     HTML: 'http://www.w3.org/1999/xhtml',
@@ -356,13 +352,10 @@ SPECIAL_ELEMENTS[NS.SVG][$.TITLE] = true;
 SPECIAL_ELEMENTS[NS.SVG][$.FOREIGN_OBJECT] = true;
 SPECIAL_ELEMENTS[NS.SVG][$.DESC] = true;
 
-
 /***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 exports.REPLACEMENT_CHARACTER = '\uFFFD';
 
@@ -410,13 +403,10 @@ exports.CODE_POINT_SEQUENCES = {
     SYSTEM_STRING: [0x53, 0x59, 0x53, 0x54, 0x45, 0x4D] //SYSTEM
 };
 
-
 /***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var Preprocessor = __webpack_require__(55),
     locationInfoMixin = __webpack_require__(47),
@@ -441,7 +431,6 @@ var HAS_DATA_FLAG = 1 << 0;
 var DATA_DUPLET_FLAG = 1 << 1;
 var HAS_BRANCHES_FLAG = 1 << 2;
 var MAX_BRANCH_MARKER_VALUE = HAS_DATA_FLAG | DATA_DUPLET_FLAG | HAS_BRANCHES_FLAG;
-
 
 //States
 var DATA_STATE = 'DATA_STATE',
@@ -589,7 +578,6 @@ function findNamedEntityTreeBranch(nodeIx, cp) {
     return -1;
 }
 
-
 //Tokenizer
 var Tokenizer = module.exports = function (options) {
     this.preprocessor = new Preprocessor();
@@ -688,7 +676,6 @@ Tokenizer.prototype._ensureHibernation = function () {
 
     return false;
 };
-
 
 //Consumption
 Tokenizer.prototype._consume = function () {
@@ -967,7 +954,6 @@ Tokenizer.prototype._consumeNamedEntity = function (inAttr) {
             i = cp === current ? ++i : -1;
     }
 
-
     if (referencedCodePoints) {
         if (!semicolonTerminated) {
             //NOTE: unconsume excess (e.g. 'it' in '&notit')
@@ -1057,7 +1043,6 @@ _[DATA_STATE] = function dataState(cp) {
         this._emitCodePoint(cp);
 };
 
-
 //12.2.4.2 Character reference in data state
 //------------------------------------------------------------------
 _[CHARACTER_REFERENCE_IN_DATA_STATE] = function characterReferenceInDataState(cp) {
@@ -1075,7 +1060,6 @@ _[CHARACTER_REFERENCE_IN_DATA_STATE] = function characterReferenceInDataState(cp
         this.state = DATA_STATE;
     }
 };
-
 
 //12.2.4.3 RCDATA state
 //------------------------------------------------------------------
@@ -1098,7 +1082,6 @@ _[RCDATA_STATE] = function rcdataState(cp) {
         this._emitCodePoint(cp);
 };
 
-
 //12.2.4.4 Character reference in RCDATA state
 //------------------------------------------------------------------
 _[CHARACTER_REFERENCE_IN_RCDATA_STATE] = function characterReferenceInRcdataState(cp) {
@@ -1116,7 +1099,6 @@ _[CHARACTER_REFERENCE_IN_RCDATA_STATE] = function characterReferenceInRcdataStat
         this.state = RCDATA_STATE;
     }
 };
-
 
 //12.2.4.5 RAWTEXT state
 //------------------------------------------------------------------
@@ -1136,7 +1118,6 @@ _[RAWTEXT_STATE] = function rawtextState(cp) {
         this._emitCodePoint(cp);
 };
 
-
 //12.2.4.6 Script data state
 //------------------------------------------------------------------
 _[SCRIPT_DATA_STATE] = function scriptDataState(cp) {
@@ -1155,7 +1136,6 @@ _[SCRIPT_DATA_STATE] = function scriptDataState(cp) {
         this._emitCodePoint(cp);
 };
 
-
 //12.2.4.7 PLAINTEXT state
 //------------------------------------------------------------------
 _[PLAINTEXT_STATE] = function plaintextState(cp) {
@@ -1170,7 +1150,6 @@ _[PLAINTEXT_STATE] = function plaintextState(cp) {
     else
         this._emitCodePoint(cp);
 };
-
 
 //12.2.4.8 Tag open state
 //------------------------------------------------------------------
@@ -1195,7 +1174,6 @@ _[TAG_OPEN_STATE] = function tagOpenState(cp) {
     }
 };
 
-
 //12.2.4.9 End tag open state
 //------------------------------------------------------------------
 _[END_TAG_OPEN_STATE] = function endTagOpenState(cp) {
@@ -1216,7 +1194,6 @@ _[END_TAG_OPEN_STATE] = function endTagOpenState(cp) {
     else
         this._reconsumeInState(BOGUS_COMMENT_STATE);
 };
-
 
 //12.2.4.10 Tag name state
 //------------------------------------------------------------------
@@ -1245,7 +1222,6 @@ _[TAG_NAME_STATE] = function tagNameState(cp) {
         this.currentToken.tagName += toChar(cp);
 };
 
-
 //12.2.4.11 RCDATA less-than sign state
 //------------------------------------------------------------------
 _[RCDATA_LESS_THAN_SIGN_STATE] = function rcdataLessThanSignState(cp) {
@@ -1259,7 +1235,6 @@ _[RCDATA_LESS_THAN_SIGN_STATE] = function rcdataLessThanSignState(cp) {
         this._reconsumeInState(RCDATA_STATE);
     }
 };
-
 
 //12.2.4.12 RCDATA end tag open state
 //------------------------------------------------------------------
@@ -1275,7 +1250,6 @@ _[RCDATA_END_TAG_OPEN_STATE] = function rcdataEndTagOpenState(cp) {
         this._reconsumeInState(RCDATA_STATE);
     }
 };
-
 
 //12.2.4.13 RCDATA end tag name state
 //------------------------------------------------------------------
@@ -1316,7 +1290,6 @@ _[RCDATA_END_TAG_NAME_STATE] = function rcdataEndTagNameState(cp) {
     }
 };
 
-
 //12.2.4.14 RAWTEXT less-than sign state
 //------------------------------------------------------------------
 _[RAWTEXT_LESS_THAN_SIGN_STATE] = function rawtextLessThanSignState(cp) {
@@ -1330,7 +1303,6 @@ _[RAWTEXT_LESS_THAN_SIGN_STATE] = function rawtextLessThanSignState(cp) {
         this._reconsumeInState(RAWTEXT_STATE);
     }
 };
-
 
 //12.2.4.15 RAWTEXT end tag open state
 //------------------------------------------------------------------
@@ -1346,7 +1318,6 @@ _[RAWTEXT_END_TAG_OPEN_STATE] = function rawtextEndTagOpenState(cp) {
         this._reconsumeInState(RAWTEXT_STATE);
     }
 };
-
 
 //12.2.4.16 RAWTEXT end tag name state
 //------------------------------------------------------------------
@@ -1387,7 +1358,6 @@ _[RAWTEXT_END_TAG_NAME_STATE] = function rawtextEndTagNameState(cp) {
     }
 };
 
-
 //12.2.4.17 Script data less-than sign state
 //------------------------------------------------------------------
 _[SCRIPT_DATA_LESS_THAN_SIGN_STATE] = function scriptDataLessThanSignState(cp) {
@@ -1408,7 +1378,6 @@ _[SCRIPT_DATA_LESS_THAN_SIGN_STATE] = function scriptDataLessThanSignState(cp) {
     }
 };
 
-
 //12.2.4.18 Script data end tag open state
 //------------------------------------------------------------------
 _[SCRIPT_DATA_END_TAG_OPEN_STATE] = function scriptDataEndTagOpenState(cp) {
@@ -1423,7 +1392,6 @@ _[SCRIPT_DATA_END_TAG_OPEN_STATE] = function scriptDataEndTagOpenState(cp) {
         this._reconsumeInState(SCRIPT_DATA_STATE);
     }
 };
-
 
 //12.2.4.19 Script data end tag name state
 //------------------------------------------------------------------
@@ -1464,7 +1432,6 @@ _[SCRIPT_DATA_END_TAG_NAME_STATE] = function scriptDataEndTagNameState(cp) {
     }
 };
 
-
 //12.2.4.20 Script data escape start state
 //------------------------------------------------------------------
 _[SCRIPT_DATA_ESCAPE_START_STATE] = function scriptDataEscapeStartState(cp) {
@@ -1477,7 +1444,6 @@ _[SCRIPT_DATA_ESCAPE_START_STATE] = function scriptDataEscapeStartState(cp) {
         this._reconsumeInState(SCRIPT_DATA_STATE);
 };
 
-
 //12.2.4.21 Script data escape start dash state
 //------------------------------------------------------------------
 _[SCRIPT_DATA_ESCAPE_START_DASH_STATE] = function scriptDataEscapeStartDashState(cp) {
@@ -1489,7 +1455,6 @@ _[SCRIPT_DATA_ESCAPE_START_DASH_STATE] = function scriptDataEscapeStartDashState
     else
         this._reconsumeInState(SCRIPT_DATA_STATE);
 };
-
 
 //12.2.4.22 Script data escaped state
 //------------------------------------------------------------------
@@ -1511,7 +1476,6 @@ _[SCRIPT_DATA_ESCAPED_STATE] = function scriptDataEscapedState(cp) {
     else
         this._emitCodePoint(cp);
 };
-
 
 //12.2.4.23 Script data escaped dash state
 //------------------------------------------------------------------
@@ -1537,7 +1501,6 @@ _[SCRIPT_DATA_ESCAPED_DASH_STATE] = function scriptDataEscapedDashState(cp) {
         this._emitCodePoint(cp);
     }
 };
-
 
 //12.2.4.24 Script data escaped dash dash state
 //------------------------------------------------------------------
@@ -1567,7 +1530,6 @@ _[SCRIPT_DATA_ESCAPED_DASH_DASH_STATE] = function scriptDataEscapedDashDashState
     }
 };
 
-
 //12.2.4.25 Script data escaped less-than sign state
 //------------------------------------------------------------------
 _[SCRIPT_DATA_ESCAPED_LESS_THAN_SIGN_STATE] = function scriptDataEscapedLessThanSignState(cp) {
@@ -1588,7 +1550,6 @@ _[SCRIPT_DATA_ESCAPED_LESS_THAN_SIGN_STATE] = function scriptDataEscapedLessThan
     }
 };
 
-
 //12.2.4.26 Script data escaped end tag open state
 //------------------------------------------------------------------
 _[SCRIPT_DATA_ESCAPED_END_TAG_OPEN_STATE] = function scriptDataEscapedEndTagOpenState(cp) {
@@ -1603,7 +1564,6 @@ _[SCRIPT_DATA_ESCAPED_END_TAG_OPEN_STATE] = function scriptDataEscapedEndTagOpen
         this._reconsumeInState(SCRIPT_DATA_ESCAPED_STATE);
     }
 };
-
 
 //12.2.4.27 Script data escaped end tag name state
 //------------------------------------------------------------------
@@ -1644,7 +1604,6 @@ _[SCRIPT_DATA_ESCAPED_END_TAG_NAME_STATE] = function scriptDataEscapedEndTagName
     }
 };
 
-
 //12.2.4.28 Script data double escape start state
 //------------------------------------------------------------------
 _[SCRIPT_DATA_DOUBLE_ESCAPE_START_STATE] = function scriptDataDoubleEscapeStartState(cp) {
@@ -1666,7 +1625,6 @@ _[SCRIPT_DATA_DOUBLE_ESCAPE_START_STATE] = function scriptDataDoubleEscapeStartS
     else
         this._reconsumeInState(SCRIPT_DATA_ESCAPED_STATE);
 };
-
 
 //12.2.4.29 Script data double escaped state
 //------------------------------------------------------------------
@@ -1690,7 +1648,6 @@ _[SCRIPT_DATA_DOUBLE_ESCAPED_STATE] = function scriptDataDoubleEscapedState(cp) 
     else
         this._emitCodePoint(cp);
 };
-
 
 //12.2.4.30 Script data double escaped dash state
 //------------------------------------------------------------------
@@ -1718,7 +1675,6 @@ _[SCRIPT_DATA_DOUBLE_ESCAPED_DASH_STATE] = function scriptDataDoubleEscapedDashS
         this._emitCodePoint(cp);
     }
 };
-
 
 //12.2.4.31 Script data double escaped dash dash state
 //------------------------------------------------------------------
@@ -1750,7 +1706,6 @@ _[SCRIPT_DATA_DOUBLE_ESCAPED_DASH_DASH_STATE] = function scriptDataDoubleEscaped
     }
 };
 
-
 //12.2.4.32 Script data double escaped less-than sign state
 //------------------------------------------------------------------
 _[SCRIPT_DATA_DOUBLE_ESCAPED_LESS_THAN_SIGN_STATE] = function scriptDataDoubleEscapedLessThanSignState(cp) {
@@ -1763,7 +1718,6 @@ _[SCRIPT_DATA_DOUBLE_ESCAPED_LESS_THAN_SIGN_STATE] = function scriptDataDoubleEs
     else
         this._reconsumeInState(SCRIPT_DATA_DOUBLE_ESCAPED_STATE);
 };
-
 
 //12.2.4.33 Script data double escape end state
 //------------------------------------------------------------------
@@ -1788,7 +1742,6 @@ _[SCRIPT_DATA_DOUBLE_ESCAPE_END_STATE] = function scriptDataDoubleEscapeEndState
         this._reconsumeInState(SCRIPT_DATA_DOUBLE_ESCAPED_STATE);
 };
 
-
 //12.2.4.34 Before attribute name state
 //------------------------------------------------------------------
 _[BEFORE_ATTRIBUTE_NAME_STATE] = function beforeAttributeNameState(cp) {
@@ -1808,7 +1761,6 @@ _[BEFORE_ATTRIBUTE_NAME_STATE] = function beforeAttributeNameState(cp) {
         this._reconsumeInState(ATTRIBUTE_NAME_STATE);
     }
 };
-
 
 //12.2.4.35 Attribute name state
 //------------------------------------------------------------------
@@ -1833,7 +1785,6 @@ _[ATTRIBUTE_NAME_STATE] = function attributeNameState(cp) {
     else
         this.currentAttr.name += toChar(cp);
 };
-
 
 //12.2.4.36 After attribute name state
 //------------------------------------------------------------------
@@ -1861,7 +1812,6 @@ _[AFTER_ATTRIBUTE_NAME_STATE] = function afterAttributeNameState(cp) {
     }
 };
 
-
 //12.2.4.37 Before attribute value state
 //------------------------------------------------------------------
 _[BEFORE_ATTRIBUTE_VALUE_STATE] = function beforeAttributeValueState(cp) {
@@ -1877,7 +1827,6 @@ _[BEFORE_ATTRIBUTE_VALUE_STATE] = function beforeAttributeValueState(cp) {
     else
         this._reconsumeInState(ATTRIBUTE_VALUE_UNQUOTED_STATE);
 };
-
 
 //12.2.4.38 Attribute value (double-quoted) state
 //------------------------------------------------------------------
@@ -1901,7 +1850,6 @@ _[ATTRIBUTE_VALUE_DOUBLE_QUOTED_STATE] = function attributeValueDoubleQuotedStat
         this.currentAttr.value += toChar(cp);
 };
 
-
 //12.2.4.39 Attribute value (single-quoted) state
 //------------------------------------------------------------------
 _[ATTRIBUTE_VALUE_SINGLE_QUOTED_STATE] = function attributeValueSingleQuotedState(cp) {
@@ -1923,7 +1871,6 @@ _[ATTRIBUTE_VALUE_SINGLE_QUOTED_STATE] = function attributeValueSingleQuotedStat
     else
         this.currentAttr.value += toChar(cp);
 };
-
 
 //12.2.4.40 Attribute value (unquoted) state
 //------------------------------------------------------------------
@@ -1956,7 +1903,6 @@ _[ATTRIBUTE_VALUE_UNQUOTED_STATE] = function attributeValueUnquotedState(cp) {
         this.currentAttr.value += toChar(cp);
 };
 
-
 //12.2.4.41 Character reference in attribute value state
 //------------------------------------------------------------------
 _[CHARACTER_REFERENCE_IN_ATTRIBUTE_VALUE_STATE] = function characterReferenceInAttributeValueState(cp) {
@@ -1973,7 +1919,6 @@ _[CHARACTER_REFERENCE_IN_ATTRIBUTE_VALUE_STATE] = function characterReferenceInA
         this.state = this.returnState;
     }
 };
-
 
 //12.2.4.42 After attribute value (quoted) state
 //------------------------------------------------------------------
@@ -1996,7 +1941,6 @@ _[AFTER_ATTRIBUTE_VALUE_QUOTED_STATE] = function afterAttributeValueQuotedState(
         this._reconsumeInState(BEFORE_ATTRIBUTE_NAME_STATE);
 };
 
-
 //12.2.4.43 Self-closing start tag state
 //------------------------------------------------------------------
 _[SELF_CLOSING_START_TAG_STATE] = function selfClosingStartTagState(cp) {
@@ -2012,7 +1956,6 @@ _[SELF_CLOSING_START_TAG_STATE] = function selfClosingStartTagState(cp) {
     else
         this._reconsumeInState(BEFORE_ATTRIBUTE_NAME_STATE);
 };
-
 
 //12.2.4.44 Bogus comment state
 //------------------------------------------------------------------
@@ -2076,7 +2019,6 @@ _[MARKUP_DECLARATION_OPEN_STATE] = function markupDeclarationOpenState(cp) {
     }
 };
 
-
 //12.2.4.46 Comment start state
 //------------------------------------------------------------------
 _[COMMENT_START_STATE] = function commentStartState(cp) {
@@ -2103,7 +2045,6 @@ _[COMMENT_START_STATE] = function commentStartState(cp) {
         this.state = COMMENT_STATE;
     }
 };
-
 
 //12.2.4.47 Comment start dash state
 //------------------------------------------------------------------
@@ -2134,7 +2075,6 @@ _[COMMENT_START_DASH_STATE] = function commentStartDashState(cp) {
     }
 };
 
-
 //12.2.4.48 Comment state
 //------------------------------------------------------------------
 _[COMMENT_STATE] = function commentState(cp) {
@@ -2152,7 +2092,6 @@ _[COMMENT_STATE] = function commentState(cp) {
     else
         this.currentToken.data += toChar(cp);
 };
-
 
 //12.2.4.49 Comment end dash state
 //------------------------------------------------------------------
@@ -2177,7 +2116,6 @@ _[COMMENT_END_DASH_STATE] = function commentEndDashState(cp) {
         this.state = COMMENT_STATE;
     }
 };
-
 
 //12.2.4.50 Comment end state
 //------------------------------------------------------------------
@@ -2211,7 +2149,6 @@ _[COMMENT_END_STATE] = function commentEndState(cp) {
     }
 };
 
-
 //12.2.4.51 Comment end bang state
 //------------------------------------------------------------------
 _[COMMENT_END_BANG_STATE] = function commentEndBangState(cp) {
@@ -2243,7 +2180,6 @@ _[COMMENT_END_BANG_STATE] = function commentEndBangState(cp) {
     }
 };
 
-
 //12.2.4.52 DOCTYPE state
 //------------------------------------------------------------------
 _[DOCTYPE_STATE] = function doctypeState(cp) {
@@ -2269,7 +2205,6 @@ _[DOCTYPE_STATE] = function doctypeState(cp) {
     }
 };
 
-
 //12.2.4.54 DOCTYPE name state
 //------------------------------------------------------------------
 _[DOCTYPE_NAME_STATE] = function doctypeNameState(cp) {
@@ -2285,7 +2220,6 @@ _[DOCTYPE_NAME_STATE] = function doctypeNameState(cp) {
     else
         this.currentToken.name += toChar(cp);
 };
-
 
 //12.2.4.55 After DOCTYPE name state
 //------------------------------------------------------------------
@@ -2317,7 +2251,6 @@ _[AFTER_DOCTYPE_NAME_STATE] = function afterDoctypeNameState(cp) {
     }
 };
 
-
 //12.2.4.57 Before DOCTYPE public identifier state
 //------------------------------------------------------------------
 _[BEFORE_DOCTYPE_PUBLIC_IDENTIFIER_STATE] = function beforeDoctypePublicIdentifierState(cp) {
@@ -2339,7 +2272,6 @@ _[BEFORE_DOCTYPE_PUBLIC_IDENTIFIER_STATE] = function beforeDoctypePublicIdentifi
         this._reconsumeInState(BOGUS_DOCTYPE_STATE);
     }
 };
-
 
 //12.2.4.58 DOCTYPE public identifier (double-quoted) state
 //------------------------------------------------------------------
@@ -2366,7 +2298,6 @@ _[DOCTYPE_PUBLIC_IDENTIFIER_DOUBLE_QUOTED_STATE] = function doctypePublicIdentif
         this.currentToken.publicId += toChar(cp);
 };
 
-
 //12.2.4.59 DOCTYPE public identifier (single-quoted) state
 //------------------------------------------------------------------
 _[DOCTYPE_PUBLIC_IDENTIFIER_SINGLE_QUOTED_STATE] = function doctypePublicIdentifierSingleQuotedState(cp) {
@@ -2392,7 +2323,6 @@ _[DOCTYPE_PUBLIC_IDENTIFIER_SINGLE_QUOTED_STATE] = function doctypePublicIdentif
         this.currentToken.publicId += toChar(cp);
 };
 
-
 //12.2.4.61 Between DOCTYPE public and system identifiers state
 //------------------------------------------------------------------
 _[BETWEEN_DOCTYPE_PUBLIC_AND_SYSTEM_IDENTIFIERS_STATE] = function betweenDoctypePublicAndSystemIdentifiersState(cp) {
@@ -2409,7 +2339,6 @@ _[BETWEEN_DOCTYPE_PUBLIC_AND_SYSTEM_IDENTIFIERS_STATE] = function betweenDoctype
         this.state = DOCTYPE_SYSTEM_IDENTIFIER_DOUBLE_QUOTED_STATE;
     }
 
-
     else if (cp === $.APOSTROPHE) {
         this.currentToken.systemId = '';
         this.state = DOCTYPE_SYSTEM_IDENTIFIER_SINGLE_QUOTED_STATE;
@@ -2420,7 +2349,6 @@ _[BETWEEN_DOCTYPE_PUBLIC_AND_SYSTEM_IDENTIFIERS_STATE] = function betweenDoctype
         this._reconsumeInState(BOGUS_DOCTYPE_STATE);
     }
 };
-
 
 //12.2.4.63 Before DOCTYPE system identifier state
 //------------------------------------------------------------------
@@ -2443,7 +2371,6 @@ _[BEFORE_DOCTYPE_SYSTEM_IDENTIFIER_STATE] = function beforeDoctypeSystemIdentifi
         this._reconsumeInState(BOGUS_DOCTYPE_STATE);
     }
 };
-
 
 //12.2.4.64 DOCTYPE system identifier (double-quoted) state
 //------------------------------------------------------------------
@@ -2470,7 +2397,6 @@ _[DOCTYPE_SYSTEM_IDENTIFIER_DOUBLE_QUOTED_STATE] = function doctypeSystemIdentif
         this.currentToken.systemId += toChar(cp);
 };
 
-
 //12.2.4.65 DOCTYPE system identifier (single-quoted) state
 //------------------------------------------------------------------
 _[DOCTYPE_SYSTEM_IDENTIFIER_SINGLE_QUOTED_STATE] = function doctypeSystemIdentifierSingleQuotedState(cp) {
@@ -2496,7 +2422,6 @@ _[DOCTYPE_SYSTEM_IDENTIFIER_SINGLE_QUOTED_STATE] = function doctypeSystemIdentif
         this.currentToken.systemId += toChar(cp);
 };
 
-
 //12.2.4.66 After DOCTYPE system identifier state
 //------------------------------------------------------------------
 _[AFTER_DOCTYPE_SYSTEM_IDENTIFIER_STATE] = function afterDoctypeSystemIdentifierState(cp) {
@@ -2518,7 +2443,6 @@ _[AFTER_DOCTYPE_SYSTEM_IDENTIFIER_STATE] = function afterDoctypeSystemIdentifier
         this.state = BOGUS_DOCTYPE_STATE;
 };
 
-
 //12.2.4.67 Bogus DOCTYPE state
 //------------------------------------------------------------------
 _[BOGUS_DOCTYPE_STATE] = function bogusDoctypeState(cp) {
@@ -2532,7 +2456,6 @@ _[BOGUS_DOCTYPE_STATE] = function bogusDoctypeState(cp) {
         this._reconsumeInState(DATA_STATE);
     }
 };
-
 
 //12.2.4.68 CDATA section state
 //------------------------------------------------------------------
@@ -2565,31 +2488,25 @@ _[CDATA_SECTION_STATE] = function cdataSectionState(cp) {
     }
 };
 
-
 /***/ }),
 /* 5 */
 /***/ (function(module, exports) {
-
 module.exports = require("util");
 
 /***/ }),
 /* 6 */
 /***/ (function(module, exports) {
-
 module.exports = require("stream");
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(7);
 
 /***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var DOCUMENT_MODE = __webpack_require__(2).DOCUMENT_MODE;
 
@@ -2682,7 +2599,6 @@ var VALID_DOCTYPE_NAME = 'html',
         '-//W3C//DTD HTML 4.01 Transitional//'
     ]);
 
-
 //Utils
 function enquoteDoctypeId(id) {
     var quote = id.indexOf('"') !== -1 ? '\'' : '"';
@@ -2698,7 +2614,6 @@ function hasPrefix(publicId, prefixes) {
 
     return false;
 }
-
 
 //API
 exports.getDocumentMode = function (name, publicId, systemId) {
@@ -2746,13 +2661,10 @@ exports.serializeContent = function (name, publicId, systemId) {
     return str;
 };
 
-
 /***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 module.exports = function mergeOptions(defaults, options) {
     options = options || Object.create(null);
@@ -2766,17 +2678,13 @@ module.exports = function mergeOptions(defaults, options) {
     }, Object.create(null));
 };
 
-
 /***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var Parser = __webpack_require__(17),
     Serializer = __webpack_require__(20);
-
 
 // Shorthands
 exports.parse = function parse(html, options) {
@@ -2803,13 +2711,11 @@ exports.serialize = function (node, options) {
     return serializer.serialize();
 };
 
-
 // Tree adapters
 exports.treeAdapters = {
     default: __webpack_require__(11),
     htmlparser2: __webpack_require__(56)
 };
-
 
 // Streaming
 exports.ParserStream = __webpack_require__(19);
@@ -2817,13 +2723,10 @@ exports.PlainTextConversionStream = __webpack_require__(49);
 exports.SerializerStream = __webpack_require__(53);
 exports.SAXParser = __webpack_require__(51);
 
-
 /***/ }),
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var DOCUMENT_MODE = __webpack_require__(2).DOCUMENT_MODE;
 
@@ -2869,7 +2772,6 @@ var createTextNode = function (value) {
         parentNode: null
     };
 };
-
 
 //Tree mutation
 var appendChild = exports.appendChild = function (parentNode, newNode) {
@@ -2969,7 +2871,6 @@ exports.adoptAttributes = function (recipient, attrs) {
     }
 };
 
-
 //Tree traversing
 exports.getFirstChild = function (node) {
     return node.childNodes[0];
@@ -3033,17 +2934,14 @@ exports.isElementNode = function (node) {
     return !!node.tagName;
 };
 
-
 /***/ }),
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(38);
 
 /***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
-
 /**
  * @license Angular v4.2.5
  * (c) 2010-2017 Google, Inc. https://angular.io/
@@ -4848,7 +4746,7 @@ var ServerRendererFactory2 = (function () {
         this.schema = new _angular_compiler.DomElementSchemaRegistry();
         this.defaultRenderer = new DefaultServerRenderer2(document, ngZone, this.schema);
     }
-    
+
     /**
      * @param {?} element
      * @param {?} type
@@ -5411,15 +5309,12 @@ exports.ɵa = instantiateServerRendererFactory;
 exports.ɵb = ServerStylesHost;
 
 Object.defineProperty(exports, '__esModule', { value: true });
-
 })));
 //# sourceMappingURL=platform-server.umd.js.map
-
 
 /***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
-
 /**
  * @license Angular v4.2.5
  * (c) 2010-2017 Google, Inc. https://angular.io/
@@ -7814,11 +7709,11 @@ var SubTimelineBuilder = (function (_super) {
               means nothing animates during that delay, but the styles are still renderered. For this
               to work the original offset values that exist in the original keyframes must be "warped"
               so that they can take the new keyframe + delay into account.
-      
+
               delay=1000, duration=1000, keyframes = 0 .5 1
-      
+
               turns into
-      
+
               delay=0, duration=2000, keyframes = 0 .33 .66 1
              */
             // offsets between 1 ... n -1 are all warped by the keyframe stretch
@@ -10371,15 +10266,12 @@ exports.ɵsupportsWebAnimations = supportsWebAnimations;
 exports.ɵWebAnimationsPlayer = WebAnimationsPlayer;
 
 Object.defineProperty(exports, '__esModule', { value: true });
-
 })));
 //# sourceMappingURL=animations-browser.umd.js.map
-
 
 /***/ }),
 /* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
@@ -10404,14 +10296,10 @@ var AppComponent = (function () {
     return AppComponent;
 }());
 
-
-
 /***/ }),
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var Tokenizer = __webpack_require__(4),
     HTML = __webpack_require__(2);
@@ -10420,7 +10308,6 @@ var Tokenizer = __webpack_require__(4),
 var $ = HTML.TAG_NAMES,
     NS = HTML.NAMESPACES,
     ATTRS = HTML.ATTRS;
-
 
 //MIME types
 var MIME_TYPES = {
@@ -10504,7 +10391,6 @@ var DEFINITION_URL_ATTR = 'definitionurl',
         'xml:space': {prefix: 'xml', name: 'space', namespace: NS.XML},
         'xmlns': {prefix: '', name: 'xmlns', namespace: NS.XMLNS},
         'xmlns:xlink': {prefix: 'xmlns', name: 'xlink', namespace: NS.XMLNS}
-
     };
 
 //SVG tag names adjustment map
@@ -10672,13 +10558,10 @@ exports.isIntegrationPoint = function (tn, ns, attrs, foreignNS) {
     return false;
 };
 
-
 /***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var Tokenizer = __webpack_require__(4),
     OpenElementStack = __webpack_require__(18),
@@ -10980,7 +10863,6 @@ _[AFTER_AFTER_FRAMESET_MODE][Tokenizer.DOCTYPE_TOKEN] = ignoreToken;
 _[AFTER_AFTER_FRAMESET_MODE][Tokenizer.START_TAG_TOKEN] = startTagAfterAfterFrameset;
 _[AFTER_AFTER_FRAMESET_MODE][Tokenizer.END_TAG_TOKEN] = ignoreToken;
 _[AFTER_AFTER_FRAMESET_MODE][Tokenizer.EOF_TOKEN] = stopParsing;
-
 
 //Parser
 var Parser = module.exports = function (options) {
@@ -11671,7 +11553,6 @@ function callAdoptionAgency(p, token) {
     }
 }
 
-
 //Generic token handlers
 //------------------------------------------------------------------
 function ignoreToken() {
@@ -11718,7 +11599,6 @@ function tokenInInitialMode(p, token) {
     p._processToken(token);
 }
 
-
 //12.2.5.4.2 The "before html" insertion mode
 //------------------------------------------------------------------
 function startTagBeforeHtml(p, token) {
@@ -11743,7 +11623,6 @@ function tokenBeforeHtml(p, token) {
     p.insertionMode = BEFORE_HEAD_MODE;
     p._processToken(token);
 }
-
 
 //12.2.5.4.3 The "before head" insertion mode
 //------------------------------------------------------------------
@@ -11776,7 +11655,6 @@ function tokenBeforeHead(p, token) {
     p.insertionMode = IN_HEAD_MODE;
     p._processToken(token);
 }
-
 
 //12.2.5.4.4 The "in head" insertion mode
 //------------------------------------------------------------------
@@ -11838,7 +11716,6 @@ function tokenInHead(p, token) {
     p._processToken(token);
 }
 
-
 //12.2.5.4.6 The "after head" insertion mode
 //------------------------------------------------------------------
 function startTagAfterHead(p, token) {
@@ -11884,7 +11761,6 @@ function tokenAfterHead(p, token) {
     p.insertionMode = IN_BODY_MODE;
     p._processToken(token);
 }
-
 
 //12.2.5.4.7 The "in body" insertion mode
 //------------------------------------------------------------------
@@ -12081,7 +11957,6 @@ function inputStartTagInBody(p, token) {
 
     if (!inputType || inputType.toLowerCase() !== HIDDEN_INPUT_TYPE)
         p.framesetOk = false;
-
 }
 
 function paramStartTagInBody(p, token) {
@@ -12738,13 +12613,11 @@ function endTagInText(p, token) {
     p.insertionMode = p.originalInsertionMode;
 }
 
-
 function eofInText(p, token) {
     p.openElements.pop();
     p.insertionMode = p.originalInsertionMode;
     p._processToken(token);
 }
-
 
 //12.2.5.4.9 The "in table" insertion mode
 //------------------------------------------------------------------
@@ -12904,7 +12777,6 @@ function startTagInTable(p, token) {
         default:
             tokenInTable(p, token);
     }
-
 }
 
 function endTagInTable(p, token) {
@@ -12933,7 +12805,6 @@ function tokenInTable(p, token) {
     p.fosterParentingEnabled = savedFosterParentingState;
 }
 
-
 //12.2.5.4.10 The "in table text" insertion mode
 //------------------------------------------------------------------
 function whitespaceCharacterInTableText(p, token) {
@@ -12961,7 +12832,6 @@ function tokenInTableText(p, token) {
     p.insertionMode = p.originalInsertionMode;
     p._processToken(token);
 }
-
 
 //12.2.5.4.11 The "in caption" insertion mode
 //------------------------------------------------------------------
@@ -13002,7 +12872,6 @@ function endTagInCaption(p, token) {
              tn !== $.TD && tn !== $.TFOOT && tn !== $.TH && tn !== $.THEAD && tn !== $.TR)
         endTagInBody(p, token);
 }
-
 
 //12.2.5.4.12 The "in column group" insertion mode
 //------------------------------------------------------------------
@@ -13067,7 +12936,6 @@ function startTagInTableBody(p, token) {
 
     else if (tn === $.CAPTION || tn === $.COL || tn === $.COLGROUP ||
              tn === $.TBODY || tn === $.TFOOT || tn === $.THEAD) {
-
         if (p.openElements.hasTableBodyContextInTableScope()) {
             p.openElements.clearBackToTableBodyContext();
             p.openElements.pop();
@@ -13165,7 +13033,6 @@ function endTagInRow(p, token) {
         endTagInTable(p, token);
 }
 
-
 //12.2.5.4.15 The "in cell" insertion mode
 //------------------------------------------------------------------
 function startTagInCell(p, token) {
@@ -13173,7 +13040,6 @@ function startTagInCell(p, token) {
 
     if (tn === $.CAPTION || tn === $.COL || tn === $.COLGROUP || tn === $.TBODY ||
         tn === $.TD || tn === $.TFOOT || tn === $.TH || tn === $.THEAD || tn === $.TR) {
-
         if (p.openElements.hasInTableScope($.TD) || p.openElements.hasInTableScope($.TH)) {
             p._closeTableCell();
             p._processToken(token);
@@ -13343,7 +13209,6 @@ function eofInTemplate(p, token) {
         p.stopped = true;
 }
 
-
 //12.2.5.4.19 The "after body" insertion mode
 //------------------------------------------------------------------
 function startTagAfterBody(p, token) {
@@ -13440,7 +13305,6 @@ function startTagAfterAfterFrameset(p, token) {
         startTagInHead(p, token);
 }
 
-
 //12.2.5.5 The rules for parsing tokens in foreign content
 //------------------------------------------------------------------
 function nullCharacterInForeignContent(p, token) {
@@ -13498,13 +13362,10 @@ function endTagInForeignContent(p, token) {
     }
 }
 
-
 /***/ }),
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var HTML = __webpack_require__(2);
 
@@ -13631,7 +13492,6 @@ OpenElementStack.prototype.push = function (element) {
 
     if (this._isInTemplate())
         this.tmplCount++;
-
 };
 
 OpenElementStack.prototype.pop = function () {
@@ -13900,13 +13760,10 @@ OpenElementStack.prototype.generateImpliedEndTagsWithExclusion = function (exclu
         this.pop();
 };
 
-
 /***/ }),
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var WritableStream = __webpack_require__(6).Writable,
     inherits = __webpack_require__(5).inherits,
@@ -13982,14 +13839,10 @@ ParserStream.prototype._scriptHandler = function (scriptElement) {
         this._runParsingLoop();
 };
 
-
-
 /***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var defaultTreeAdapter = __webpack_require__(11),
     doctype = __webpack_require__(8),
@@ -14039,14 +13892,12 @@ Serializer.escapeString = function (str, attrMode) {
     return str;
 };
 
-
 //API
 Serializer.prototype.serialize = function () {
     this._serializeChildNodes(this.startNode);
 
     return this.html;
 };
-
 
 //Internals
 Serializer.prototype._serializeChildNodes = function (parentNode) {
@@ -14083,7 +13934,6 @@ Serializer.prototype._serializeElement = function (node) {
         tn !== $.COL && tn !== $.EMBED && tn !== $.FRAME && tn !== $.HR && tn !== $.IMG && tn !== $.INPUT &&
         tn !== $.KEYGEN && tn !== $.LINK && tn !== $.MENUITEM && tn !== $.META && tn !== $.PARAM && tn !== $.SOURCE &&
         tn !== $.TRACK && tn !== $.WBR) {
-
         var childNodesHolder = tn === $.TEMPLATE && ns === NS.HTML ?
             this.treeAdapter.getTemplateContent(node) :
             node;
@@ -14152,47 +14002,39 @@ Serializer.prototype._serializeDocumentTypeNode = function (node) {
     this.html += '<' + doctype.serializeContent(name, null, null) + '>';
 };
 
-
 /***/ }),
 /* 21 */
 /***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(0);
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(36);
 
 /***/ }),
 /* 23 */
 /***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(5);
 
 /***/ }),
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(62);
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(83);
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports) {
-
 module.exports = require("url");
 
 /***/ }),
 /* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
@@ -14207,9 +14049,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
 
 var AppModule = (function () {
     function AppModule() {
@@ -14226,12 +14065,9 @@ var AppModule = (function () {
     return AppModule;
 }());
 
-
-
 /***/ }),
 /* 28 */
 /***/ (function(module, exports) {
-
 /*! *****************************************************************************
 Copyright (C) Microsoft. All rights reserved.
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
@@ -15361,7 +15197,6 @@ var Reflect;
 /***/ }),
 /* 29 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 var Observable_1 = __webpack_require__(21);
@@ -15372,19 +15207,16 @@ Observable_1.Observable.prototype.first = first_1.first;
 /***/ }),
 /* 30 */
 /***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(41);
 
 /***/ }),
 /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(47);
 
 /***/ }),
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
-
 /**
  * @license Angular v4.2.5
  * (c) 2010-2017 Google, Inc. https://angular.io/
@@ -16107,15 +15939,12 @@ exports.ɵe = instantiateRendererFactory;
 exports.ɵc = instantiateSupportedAnimationDriver;
 
 Object.defineProperty(exports, '__esModule', { value: true });
-
 })));
 //# sourceMappingURL=platform-browser-animations.umd.js.map
-
 
 /***/ }),
 /* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModuleShared; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
@@ -16139,15 +15968,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
-
-
-
-
-
-
 
 var AppModuleShared = (function () {
     function AppModuleShared() {
@@ -16178,12 +15998,9 @@ var AppModuleShared = (function () {
     return AppModuleShared;
 }());
 
-
-
 /***/ }),
 /* 34 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CounterComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
@@ -16211,12 +16028,9 @@ var CounterComponent = (function () {
     return CounterComponent;
 }());
 
-
-
 /***/ }),
 /* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FetchDataComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
@@ -16236,7 +16050,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 
-
 var FetchDataComponent = (function () {
     function FetchDataComponent(http, baseUrl) {
         var _this = this;
@@ -16255,12 +16068,9 @@ var FetchDataComponent = (function () {
     return FetchDataComponent;
 }());
 
-
-
 /***/ }),
 /* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
@@ -16284,12 +16094,9 @@ var HomeComponent = (function () {
     return HomeComponent;
 }());
 
-
-
 /***/ }),
 /* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NavMenuComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
@@ -16314,12 +16121,9 @@ var NavMenuComponent = (function () {
     return NavMenuComponent;
 }());
 
-
-
 /***/ }),
 /* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
-
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_reflect_metadata__ = __webpack_require__(28);
@@ -16337,13 +16141,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_aspnet_prerendering__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_aspnet_prerendering___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_aspnet_prerendering__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_app_module_server__ = __webpack_require__(27);
-
-
-
-
-
-
-
 
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__angular_core__["enableProdMode"])();
 /* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6_aspnet_prerendering__["createServerRenderer"])(function (params) {
@@ -16372,76 +16169,61 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__angular_core__["enableProdMod
     });
 }));
 
-
 /***/ }),
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
-
 exports = module.exports = __webpack_require__(24)(undefined);
 // imports
-
 
 // module
 exports.push([module.i, "@media (max-width: 767px) {\r\n    /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */\r\n    .body-content {\r\n        padding-top: 50px;\r\n    }\r\n}\r\n", ""]);
 
 // exports
 
-
 /***/ }),
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
-
 exports = module.exports = __webpack_require__(24)(undefined);
 // imports
-
 
 // module
 exports.push([module.i, "li .glyphicon {\r\n    margin-right: 10px;\r\n}\r\n\r\n/* Highlighting rules for nav menu items */\r\nli.link-active a,\r\nli.link-active a:hover,\r\nli.link-active a:focus {\r\n    background-color: #4189C7;\r\n    color: white;\r\n}\r\n\r\n/* Keep the nav menu independent of scrolling and on top of other items */\r\n.main-nav {\r\n    position: fixed;\r\n    top: 0;\r\n    left: 0;\r\n    right: 0;\r\n    z-index: 1;\r\n}\r\n\r\n@media (min-width: 768px) {\r\n    /* On small screens, convert the nav menu to a vertical sidebar */\r\n    .main-nav {\r\n        height: 100%;\r\n        width: calc(25% - 20px);\r\n    }\r\n    .navbar {\r\n        border-radius: 0px;\r\n        border-width: 0px;\r\n        height: 100%;\r\n    }\r\n    .navbar-header {\r\n        float: none;\r\n    }\r\n    .navbar-collapse {\r\n        border-top: 1px solid #444;\r\n        padding: 0px;\r\n    }\r\n    .navbar ul {\r\n        float: none;\r\n    }\r\n    .navbar li {\r\n        float: none;\r\n        font-size: 15px;\r\n        margin: 6px;\r\n    }\r\n    .navbar li a {\r\n        padding: 10px 16px;\r\n        border-radius: 4px;\r\n    }\r\n    .navbar a {\r\n        /* If a menu item's text is too long, truncate it */\r\n        width: 100%;\r\n        white-space: nowrap;\r\n        overflow: hidden;\r\n        text-overflow: ellipsis;\r\n    }\r\n}\r\n", ""]);
 
 // exports
 
-
 /***/ }),
 /* 41 */
 /***/ (function(module, exports) {
-
 module.exports = "<div class='container-fluid'>\r\n    <div class='row'>\r\n        <div class='col-sm-3'>\r\n            <nav-menu></nav-menu>\r\n        </div>\r\n        <div class='col-sm-9 body-content'>\r\n            <router-outlet></router-outlet>\r\n        </div>\r\n    </div>\r\n</div>\r\n";
 
 /***/ }),
 /* 42 */
 /***/ (function(module, exports) {
-
 module.exports = "<h1>Counter</h1>\r\n\r\n<p>This is a simple example of an Angular component.</p>\r\n\r\n<p>Current count: <strong>{{ currentCount }}</strong></p>\r\n\r\n<button (click)=\"incrementCounter()\">Increment</button>\r\n";
 
 /***/ }),
 /* 43 */
 /***/ (function(module, exports) {
-
 module.exports = "<h1>Weather forecast</h1>\r\n\r\n<p>This component demonstrates fetching data from the server.</p>\r\n\r\n<p *ngIf=\"!forecasts\"><em>Loading...</em></p>\r\n\r\n<table class='table' *ngIf=\"forecasts\">\r\n    <thead>\r\n        <tr>\r\n            <th>Date</th>\r\n            <th>Temp. (C)</th>\r\n            <th>Temp. (F)</th>\r\n            <th>Summary</th>\r\n        </tr>\r\n    </thead>\r\n    <tbody>\r\n        <tr *ngFor=\"let forecast of forecasts\">\r\n            <td>{{ forecast.dateFormatted }}</td>\r\n            <td>{{ forecast.temperatureC }}</td>\r\n            <td>{{ forecast.temperatureF }}</td>\r\n            <td>{{ forecast.summary }}</td>\r\n        </tr>\r\n    </tbody>\r\n</table>\r\n";
 
 /***/ }),
 /* 44 */
 /***/ (function(module, exports) {
-
 module.exports = "<h1>Hello, world!</h1>\r\n<p>Welcome to your new single-page application, built with:</p>\r\n<ul>\r\n    <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>\r\n    <li><a href='https://angular.io/'>Angular</a> and <a href='http://www.typescriptlang.org/'>TypeScript</a> for client-side code</li>\r\n    <li><a href='https://webpack.github.io/'>Webpack</a> for building and bundling client-side resources</li>\r\n    <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>\r\n</ul>\r\n<p>To help you get started, we've also set up:</p>\r\n<ul>\r\n    <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>\r\n    <li><strong>Server-side prerendering</strong>. For faster initial loading and improved SEO, your Angular app is prerendered on the server. The resulting HTML is then transferred to the browser where a client-side copy of the app takes over.</li>\r\n    <li><strong>Webpack dev middleware</strong>. In development mode, there's no need to run the <code>webpack</code> build tool. Your client-side resources are dynamically built on demand. Updates are available as soon as you modify any file.</li>\r\n    <li><strong>Hot module replacement</strong>. In development mode, you don't even need to reload the page after making most changes. Within seconds of saving changes to files, your Angular app will be rebuilt and a new instance injected is into the page.</li>\r\n    <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and the <code>webpack</code> build tool produces minified static CSS and JavaScript files.</li>\r\n</ul>\r\n";
 
 /***/ }),
 /* 45 */
 /***/ (function(module, exports) {
-
 module.exports = "<div class='main-nav'>\r\n    <div class='navbar navbar-inverse'>\r\n        <div class='navbar-header'>\r\n            <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>\r\n                <span class='sr-only'>Toggle navigation</span>\r\n                <span class='icon-bar'></span>\r\n                <span class='icon-bar'></span>\r\n                <span class='icon-bar'></span>\r\n            </button>\r\n            <a class='navbar-brand' [routerLink]=\"['/home']\">WebApplication3</a>\r\n        </div>\r\n        <div class='clearfix'></div>\r\n        <div class='navbar-collapse collapse'>\r\n            <ul class='nav navbar-nav'>\r\n                <li [routerLinkActive]=\"['link-active']\">\r\n                    <a [routerLink]=\"['/home']\">\r\n                        <span class='glyphicon glyphicon-home'></span> Home\r\n                    </a>\r\n                </li>\r\n                <li [routerLinkActive]=\"['link-active']\">\r\n                    <a [routerLink]=\"['/counter']\">\r\n                        <span class='glyphicon glyphicon-education'></span> Counter\r\n                    </a>\r\n                </li>\r\n                <li [routerLinkActive]=\"['link-active']\">\r\n                    <a [routerLink]=\"['/fetch-data']\">\r\n                        <span class='glyphicon glyphicon-th-list'></span> Fetch data\r\n                    </a>\r\n                </li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n</div>\r\n";
 
 /***/ }),
 /* 46 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var OpenElementStack = __webpack_require__(18),
     Tokenizer = __webpack_require__(4),
     HTML = __webpack_require__(2);
-
 
 //Aliases
 var $ = HTML.TAG_NAMES;
@@ -16535,7 +16317,6 @@ exports.assign = function (parser) {
             setEndLocation(parser.openElements.items[i], currentToken);
     };
 
-
     //Token processing
     parser._processTokenInForeignContent = function (token) {
         currentToken = token;
@@ -16562,7 +16343,6 @@ exports.assign = function (parser) {
         }
     };
 
-
     //Doctype
     parser._setDocumentType = function (token) {
         parserProto._setDocumentType.call(this, token);
@@ -16579,7 +16359,6 @@ exports.assign = function (parser) {
             }
         }
     };
-
 
     //Elements
     parser._attachElementToTree = function (element) {
@@ -16614,7 +16393,6 @@ exports.assign = function (parser) {
         this.openElements.current.__location = null;
     };
 
-
     //Comments
     parser._appendCommentNode = function (token, parent) {
         parserProto._appendCommentNode.call(this, token, parent);
@@ -16624,7 +16402,6 @@ exports.assign = function (parser) {
 
         commentNode.__location = token.location;
     };
-
 
     //Text
     parser._findFosterParentingLocation = function () {
@@ -16656,20 +16433,15 @@ exports.assign = function (parser) {
     };
 };
 
-
-
 /***/ }),
 /* 47 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var UNICODE = __webpack_require__(3);
 
 //Aliases
 var $ = UNICODE.CODE_POINTS;
-
 
 exports.assign = function (tokenizer) {
     //NOTE: obtain Tokenizer proto this way to avoid module circular references
@@ -16812,13 +16584,10 @@ exports.assign = function (tokenizer) {
         });
 };
 
-
 /***/ }),
 /* 48 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 //Const
 var NOAH_ARK_CAPACITY = 3;
@@ -16986,13 +16755,10 @@ FormattingElementList.prototype.getElementEntry = function (element) {
     return null;
 };
 
-
 /***/ }),
 /* 49 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var ParserStream = __webpack_require__(19),
     inherits = __webpack_require__(5).inherits,
@@ -17013,13 +16779,10 @@ var PlainTextConversionStream = module.exports = function (options) {
 
 inherits(PlainTextConversionStream, ParserStream);
 
-
 /***/ }),
 /* 50 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var WritableStream = __webpack_require__(6).Writable,
     util = __webpack_require__(5);
@@ -17034,13 +16797,10 @@ DevNullStream.prototype._write = function (chunk, encoding, cb) {
     cb();
 };
 
-
 /***/ }),
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var TransformStream = __webpack_require__(6).Transform,
     DevNullStream = __webpack_require__(50),
@@ -17111,7 +16871,6 @@ SAXParser.prototype._runParsingLoop = function () {
         if (token.type === Tokenizer.CHARACTER_TOKEN ||
             token.type === Tokenizer.WHITESPACE_CHARACTER_TOKEN ||
             token.type === Tokenizer.NULL_CHARACTER_TOKEN) {
-
             if (this.options.locationInfo) {
                 if (this.pendingText === null)
                     this.currentTokenLocation = token.location;
@@ -17154,24 +16913,19 @@ SAXParser.prototype._emitPendingText = function () {
     }
 };
 
-
 /***/ }),
 /* 52 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var Tokenizer = __webpack_require__(4),
     foreignContent = __webpack_require__(16),
     UNICODE = __webpack_require__(3),
     HTML = __webpack_require__(2);
 
-
 //Aliases
 var $ = HTML.TAG_NAMES,
     NS = HTML.NAMESPACES;
-
 
 //ParserFeedbackSimulator
 //Simulates adjustment of the Tokenizer which performed by standard parser during tree construction.
@@ -17314,13 +17068,10 @@ ParserFeedbackSimulator.prototype._handleEndTagToken = function (token) {
         foreignContent.adjustTokenSVGTagName(token);
 };
 
-
 /***/ }),
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var ReadableStream = __webpack_require__(6).Readable,
     inherits = __webpack_require__(5).inherits,
@@ -17349,13 +17100,10 @@ SerializerStream.prototype._read = function () {
     this.push(null);
 };
 
-
 /***/ }),
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 //NOTE: this file contains auto-generated array mapped radix tree that is used for the named entity references consumption
 //(details: https://github.com/inikulin/parse5/tree/master/scripts/generate_named_entity_data/README.md)
@@ -17364,9 +17112,7 @@ module.exports = new Uint16Array([4,52,65,66,67,68,69,70,71,72,73,74,75,76,77,78
 /***/ }),
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var UNICODE = __webpack_require__(3);
 
@@ -17386,10 +17132,8 @@ function getSurrogatePairCodePoint(cp1, cp2) {
     return (cp1 - 0xD800) * 0x400 + 0x2400 + cp2;
 }
 
-
 //Const
 var DEFAULT_BUFFER_WATERLINE = 1 << 16;
-
 
 //Preprocessor
 //NOTE: HTML input preprocessing
@@ -17478,7 +17222,6 @@ Preprocessor.prototype.insertHtmlAtCurrentPos = function (chunk) {
     this.endOfChunkHit = false;
 };
 
-
 Preprocessor.prototype.advance = function () {
     this.pos++;
 
@@ -17521,18 +17264,13 @@ Preprocessor.prototype.retreat = function () {
     this.pos--;
 };
 
-
-
 /***/ }),
 /* 56 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
-
 
 var doctype = __webpack_require__(8),
     DOCUMENT_MODE = __webpack_require__(2).DOCUMENT_MODE;
-
 
 //Conversion tables for DOM Level1 structure emulation
 var nodeTypes = {
@@ -17590,7 +17328,6 @@ Object.keys(nodePropertyShorthands).forEach(function (key) {
         }
     });
 });
-
 
 //Node construction
 exports.createDocument = function () {
@@ -17663,7 +17400,6 @@ var createTextNode = function (value) {
     });
 };
 
-
 //Tree mutation
 var appendChild = exports.appendChild = function (parentNode, newNode) {
     var prev = parentNode.children[parentNode.children.length - 1];
@@ -17729,7 +17465,6 @@ exports.setDocumentType = function (document, name, publicId, systemId) {
             'x-systemId': systemId
         }));
     }
-
 };
 
 exports.setDocumentMode = function (document, mode) {
@@ -17790,7 +17525,6 @@ exports.adoptAttributes = function (recipient, attrs) {
     }
 };
 
-
 //Tree traversing
 exports.getFirstChild = function (node) {
     return node.children[0];
@@ -17818,7 +17552,6 @@ exports.getAttrList = function (element) {
 
     return attrList;
 };
-
 
 //Node data
 exports.getTagName = function (element) {
@@ -17849,7 +17582,6 @@ exports.getDocumentTypeNodeSystemId = function (doctypeNode) {
     return doctypeNode['x-systemId'];
 };
 
-
 //Node types
 exports.isTextNode = function (node) {
     return node.type === 'text';
@@ -17867,11 +17599,9 @@ exports.isElementNode = function (node) {
     return !!node.attribs;
 };
 
-
 /***/ }),
 /* 57 */
 /***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 var root_1 = __webpack_require__(63);
@@ -17949,8 +17679,6 @@ exports.toPromise = toPromise;
 /***/ }),
 /* 58 */
 /***/ (function(module, exports, __webpack_require__) {
-
-
         var result = __webpack_require__(39);
 
         if (typeof result === "string") {
@@ -17958,13 +17686,10 @@ exports.toPromise = toPromise;
         } else {
             module.exports = result.toString();
         }
-    
 
 /***/ }),
 /* 59 */
 /***/ (function(module, exports, __webpack_require__) {
-
-
         var result = __webpack_require__(40);
 
         if (typeof result === "string") {
@@ -17972,12 +17697,10 @@ exports.toPromise = toPromise;
         } else {
             module.exports = result.toString();
         }
-    
 
 /***/ }),
 /* 60 */
 /***/ (function(module, exports, __webpack_require__) {
-
 // Generated by CoffeeScript 1.12.2
 (function() {
   var InvalidStateError, NetworkError, ProgressEvent, SecurityError, SyntaxError, XMLHttpRequest, XMLHttpRequestEventTarget, XMLHttpRequestUpload, http, https, os, url,
@@ -18047,7 +17770,6 @@ exports.toPromise = toPromise;
     };
 
     return XMLHttpRequestEventTarget;
-
   })();
 
   http = __webpack_require__(67);
@@ -18682,7 +18404,6 @@ exports.toPromise = toPromise;
     };
 
     return XMLHttpRequest;
-
   })(XMLHttpRequestEventTarget);
 
   module.exports = XMLHttpRequest;
@@ -18697,7 +18418,6 @@ exports.toPromise = toPromise;
     }
 
     return SecurityError;
-
   })(Error);
 
   XMLHttpRequest.SecurityError = SecurityError;
@@ -18710,7 +18430,6 @@ exports.toPromise = toPromise;
     }
 
     return InvalidStateError;
-
   })(Error);
 
   InvalidStateError = (function(superClass) {
@@ -18721,7 +18440,6 @@ exports.toPromise = toPromise;
     }
 
     return InvalidStateError;
-
   })(Error);
 
   XMLHttpRequest.InvalidStateError = InvalidStateError;
@@ -18734,7 +18452,6 @@ exports.toPromise = toPromise;
     }
 
     return NetworkError;
-
   })(Error);
 
   XMLHttpRequest.SyntaxError = SyntaxError;
@@ -18747,7 +18464,6 @@ exports.toPromise = toPromise;
     }
 
     return SyntaxError;
-
   })(Error);
 
   ProgressEvent = (function() {
@@ -18773,7 +18489,6 @@ exports.toPromise = toPromise;
     ProgressEvent.prototype.total = null;
 
     return ProgressEvent;
-
   })();
 
   XMLHttpRequest.ProgressEvent = ProgressEvent;
@@ -18847,66 +18562,54 @@ exports.toPromise = toPromise;
     };
 
     return XMLHttpRequestUpload;
-
   })(XMLHttpRequestEventTarget);
 
   XMLHttpRequest.XMLHttpRequestUpload = XMLHttpRequestUpload;
-
 }).call(this);
-
 
 /***/ }),
 /* 61 */
 /***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(20);
 
 /***/ }),
 /* 62 */
 /***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(37);
 
 /***/ }),
 /* 63 */
 /***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(4);
 
 /***/ }),
 /* 64 */
 /***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(40);
 
 /***/ }),
 /* 65 */
 /***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(6);
 
 /***/ }),
 /* 66 */
 /***/ (function(module, exports, __webpack_require__) {
-
 module.exports = (__webpack_require__(0))(82);
 
 /***/ }),
 /* 67 */
 /***/ (function(module, exports) {
-
 module.exports = require("http");
 
 /***/ }),
 /* 68 */
 /***/ (function(module, exports) {
-
 module.exports = require("https");
 
 /***/ }),
 /* 69 */
 /***/ (function(module, exports) {
-
 module.exports = require("os");
 
 /***/ })

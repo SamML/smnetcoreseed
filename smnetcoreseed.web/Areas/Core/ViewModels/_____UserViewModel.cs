@@ -1,5 +1,4 @@
-﻿
-//using DAL.Models;
+﻿//using DAL.Models;
 //using FluentValidation;
 //using Quick_Application1.Helpers;
 //using Microsoft.AspNetCore.Identity;

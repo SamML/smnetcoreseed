@@ -1,12 +1,4 @@
-﻿// ======================================
-// Author: Ebenezer Monney
-// Email:  info@ebenmonney.com
-// Copyright (c) 2017 www.ebenmonney.com
-//
-// ==> Gun4Hire: contact@ebenmonney.com
-// ======================================
-
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace smnetcoreseed.web.Areas.Core.ViewModels
 {

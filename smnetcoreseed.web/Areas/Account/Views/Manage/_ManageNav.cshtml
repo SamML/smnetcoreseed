@@ -1,5 +1,5 @@
 ﻿@using smnetcoreseed.web.Views.Manage
-@inject SignInManager<ApplicationUser> SignInManager
+@inject SignInManager<smnetcoreseed.core.Models.ApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
@@ -13,4 +13,3 @@
     }
     <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)"><a asp-action="TwoFactorAuthentication">Two-factor authentication</a></li>
 </ul>
-

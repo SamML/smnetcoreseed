@@ -1,5 +1,3 @@
-using System;
-
 namespace smnetcoreseed.core.DomainModels
 {
     public class ErrorViewModel

@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using smnetcoreseed.core.Models;
 using smnetcoreseed.core.Extensions.Repositories;
 using smnetcoreseed.core.Interfaces.Repositories;
+using smnetcoreseed.core.Models;
+using smnetcoreseed.core.Models.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using smnetcoreseed.core.Models.Repositories;
 
 namespace smnetcoreseed.core.Data.Repositories
 {
@@ -44,7 +44,7 @@ namespace smnetcoreseed.core.Data.Repositories
                 Customer cust_1 = new Customer
                 {
                     Name = "Ebenezer Monney",
-                    Email = "contact@ebenmonney.com",
+                    Email = "samuel.maicas@gmail.com",
                     Gender = Gender.Male,
                     DateCreated = DateTime.UtcNow,
                     DateModified = DateTime.UtcNow

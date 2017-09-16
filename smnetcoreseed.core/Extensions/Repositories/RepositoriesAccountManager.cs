@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using smnetcoreseed.core.Data.Repositories;
-using smnetcoreseed.core.Models;
 using smnetcoreseed.core.Interfaces.Repositories;
+using smnetcoreseed.core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,37 +14,37 @@ namespace smnetcoreseed.core.Extensions.Repositories
     public class RepositoriesAccountManager : IRepositoriesAccountManager
     {
         private readonly CoreRepositoriesDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly UserManager<smnetcoreseed.core.Models.ApplicationUser> _userManager;
+        private readonly RoleManager<smnetcoreseed.core.Models.ApplicationRole> _roleManager;
 
-        public RepositoriesAccountManager(CoreRepositoriesDbContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public RepositoriesAccountManager(CoreRepositoriesDbContext context, UserManager<smnetcoreseed.core.Models.ApplicationUser> userManager, RoleManager<smnetcoreseed.core.Models.ApplicationRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
         }
 
-        public async Task<ApplicationUser> GetUserByIdAsync(string userId)
+        public async Task<smnetcoreseed.core.Models.ApplicationUser> GetUserByIdAsync(string userId)
         {
             return await _userManager.FindByIdAsync(userId);
         }
 
-        public async Task<ApplicationUser> GetUserByUserNameAsync(string userName)
+        public async Task<smnetcoreseed.core.Models.ApplicationUser> GetUserByUserNameAsync(string userName)
         {
             return await _userManager.FindByNameAsync(userName);
         }
 
-        public async Task<ApplicationUser> GetUserByEmailAsync(string email)
+        public async Task<smnetcoreseed.core.Models.ApplicationUser> GetUserByEmailAsync(string email)
         {
             return await _userManager.FindByEmailAsync(email);
         }
 
-        public async Task<IList<string>> GetUserRolesAsync(ApplicationUser user)
+        public async Task<IList<string>> GetUserRolesAsync(smnetcoreseed.core.Models.ApplicationUser user)
         {
             return await _userManager.GetRolesAsync(user);
         }
 
-        public async Task<Tuple<ApplicationUser, string[]>> GetUserAndRolesAsync(string userId)
+        public async Task<Tuple<smnetcoreseed.core.Models.ApplicationUser, string[]>> GetUserAndRolesAsync(string userId)
         {
             var user = await _context.Users
                 .Include(u => u.Roles)
@@ -64,9 +64,9 @@ namespace smnetcoreseed.core.Extensions.Repositories
             return Tuple.Create(user, roles);
         }
 
-        public async Task<List<Tuple<ApplicationUser, string[]>>> GetUsersAndRolesAsync(int page, int pageSize)
+        public async Task<List<Tuple<smnetcoreseed.core.Models.ApplicationUser, string[]>>> GetUsersAndRolesAsync(int page, int pageSize)
         {
-            IQueryable<ApplicationUser> usersQuery = _context.Users
+            IQueryable<smnetcoreseed.core.Models.ApplicationUser> usersQuery = _context.Users
                 .Include(u => u.Roles)
                 .OrderBy(u => u.UserName);
 
@@ -89,7 +89,7 @@ namespace smnetcoreseed.core.Extensions.Repositories
                 .ToList();
         }
 
-        public async Task<Tuple<bool, string[]>> CreateUserAsync(ApplicationUser user, IEnumerable<string> roles, string password)
+        public async Task<Tuple<bool, string[]>> CreateUserAsync(smnetcoreseed.core.Models.ApplicationUser user, IEnumerable<string> roles, string password)
         {
             var result = await _userManager.CreateAsync(user, password);
             if (!result.Succeeded)
@@ -116,12 +116,12 @@ namespace smnetcoreseed.core.Extensions.Repositories
             return Tuple.Create(true, new string[] { });
         }
 
-        public async Task<Tuple<bool, string[]>> UpdateUserAsync(ApplicationUser user)
+        public async Task<Tuple<bool, string[]>> UpdateUserAsync(smnetcoreseed.core.Models.ApplicationUser user)
         {
             return await UpdateUserAsync(user, null);
         }
 
-        public async Task<Tuple<bool, string[]>> UpdateUserAsync(ApplicationUser user, IEnumerable<string> roles)
+        public async Task<Tuple<bool, string[]>> UpdateUserAsync(smnetcoreseed.core.Models.ApplicationUser user, IEnumerable<string> roles)
         {
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
@@ -152,7 +152,7 @@ namespace smnetcoreseed.core.Extensions.Repositories
             return Tuple.Create(true, new string[] { });
         }
 
-        public async Task<Tuple<bool, string[]>> ResetPasswordAsync(ApplicationUser user, string newPassword)
+        public async Task<Tuple<bool, string[]>> ResetPasswordAsync(smnetcoreseed.core.Models.ApplicationUser user, string newPassword)
         {
             string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
 
@@ -163,7 +163,7 @@ namespace smnetcoreseed.core.Extensions.Repositories
             return Tuple.Create(true, new string[] { });
         }
 
-        public async Task<Tuple<bool, string[]>> UpdatePasswordAsync(ApplicationUser user, string currentPassword, string newPassword)
+        public async Task<Tuple<bool, string[]>> UpdatePasswordAsync(smnetcoreseed.core.Models.ApplicationUser user, string currentPassword, string newPassword)
         {
             var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
             if (!result.Succeeded)
@@ -172,7 +172,7 @@ namespace smnetcoreseed.core.Extensions.Repositories
             return Tuple.Create(true, new string[] { });
         }
 
-        public async Task<bool> CheckPasswordAsync(ApplicationUser user, string password)
+        public async Task<bool> CheckPasswordAsync(smnetcoreseed.core.Models.ApplicationUser user, string password)
         {
             if (!await _userManager.CheckPasswordAsync(user, password))
             {
@@ -195,23 +195,23 @@ namespace smnetcoreseed.core.Extensions.Repositories
             return Tuple.Create(true, new string[] { });
         }
 
-        public async Task<Tuple<bool, string[]>> DeleteUserAsync(ApplicationUser user)
+        public async Task<Tuple<bool, string[]>> DeleteUserAsync(smnetcoreseed.core.Models.ApplicationUser user)
         {
             var result = await _userManager.DeleteAsync(user);
             return Tuple.Create(result.Succeeded, result.Errors.Select(e => e.Description).ToArray());
         }
 
-        public async Task<ApplicationRole> GetRoleByIdAsync(string roleId)
+        public async Task<smnetcoreseed.core.Models.ApplicationRole> GetRoleByIdAsync(string roleId)
         {
             return await _roleManager.FindByIdAsync(roleId);
         }
 
-        public async Task<ApplicationRole> GetRoleByNameAsync(string roleName)
+        public async Task<smnetcoreseed.core.Models.ApplicationRole> GetRoleByNameAsync(string roleName)
         {
             return await _roleManager.FindByNameAsync(roleName);
         }
 
-        public async Task<ApplicationRole> GetRoleLoadRelatedAsync(string roleName)
+        public async Task<smnetcoreseed.core.Models.ApplicationRole> GetRoleLoadRelatedAsync(string roleName)
         {
             var role = await _context.Roles
                 .Include(r => r.Claims)
@@ -222,9 +222,9 @@ namespace smnetcoreseed.core.Extensions.Repositories
             return role;
         }
 
-        public async Task<List<ApplicationRole>> GetRolesLoadRelatedAsync(int page, int pageSize)
+        public async Task<List<smnetcoreseed.core.Models.ApplicationRole>> GetRolesLoadRelatedAsync(int page, int pageSize)
         {
-            IQueryable<ApplicationRole> rolesQuery = _context.Roles
+            IQueryable<smnetcoreseed.core.Models.ApplicationRole> rolesQuery = _context.Roles
                 .Include(r => r.Claims)
                 .Include(r => r.Users)
                 .OrderBy(r => r.Name);
@@ -240,7 +240,7 @@ namespace smnetcoreseed.core.Extensions.Repositories
             return roles;
         }
 
-        public async Task<Tuple<bool, string[]>> CreateRoleAsync(ApplicationRole role, IEnumerable<string> claims)
+        public async Task<Tuple<bool, string[]>> CreateRoleAsync(smnetcoreseed.core.Models.ApplicationRole role, IEnumerable<string> claims)
         {
             if (claims == null)
                 claims = new string[] { };
@@ -269,7 +269,7 @@ namespace smnetcoreseed.core.Extensions.Repositories
             return Tuple.Create(true, new string[] { });
         }
 
-        public async Task<Tuple<bool, string[]>> UpdateRoleAsync(ApplicationRole role, IEnumerable<string> claims)
+        public async Task<Tuple<bool, string[]>> UpdateRoleAsync(smnetcoreseed.core.Models.ApplicationRole role, IEnumerable<string> claims)
         {
             if (claims != null)
             {
@@ -324,7 +324,7 @@ namespace smnetcoreseed.core.Extensions.Repositories
             return Tuple.Create(true, new string[] { });
         }
 
-        public async Task<Tuple<bool, string[]>> DeleteRoleAsync(ApplicationRole role)
+        public async Task<Tuple<bool, string[]>> DeleteRoleAsync(smnetcoreseed.core.Models.ApplicationRole role)
         {
             var result = await _roleManager.DeleteAsync(role);
             return Tuple.Create(result.Succeeded, result.Errors.Select(e => e.Description).ToArray());

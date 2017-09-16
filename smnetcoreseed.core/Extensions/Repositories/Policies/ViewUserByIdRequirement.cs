@@ -12,7 +12,7 @@ namespace smnetcoreseed.core.Extensions.Repositories
 
     public class ViewUserByIdHandler : AuthorizationHandler<ViewUserByIdRequirement, string>
     {
-        private UserManager<ApplicationUser> usermanager;
+        private UserManager<smnetcoreseed.core.Models.ApplicationUser> usermanager;
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, ViewUserByIdRequirement requirement, string targetUserId)
         {

@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using smnetcoreseed.core.Models;
+using smnetcoreseed.core.Extensions;
 using smnetcoreseed.core.Models.ManageViewModels;
 using smnetcoreseed.core.Services;
-using smnetcoreseed.core.Extensions;
+using System;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace smnetcoreseed.web.Areas.Account.Controllers
 {
@@ -22,8 +19,8 @@ namespace smnetcoreseed.web.Areas.Account.Controllers
     [Route("account/[controller]")]
     public class ManageController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<smnetcoreseed.core.Models.ApplicationUser> _userManager;
+        private readonly SignInManager<smnetcoreseed.core.Models.ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
@@ -31,8 +28,8 @@ namespace smnetcoreseed.web.Areas.Account.Controllers
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
         public ManageController(
-          UserManager<ApplicationUser> userManager,
-          SignInManager<ApplicationUser> signInManager,
+          UserManager<smnetcoreseed.core.Models.ApplicationUser> userManager,
+          SignInManager<smnetcoreseed.core.Models.ApplicationUser> signInManager,
           IEmailSender emailSender,
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder)
@@ -521,6 +518,6 @@ namespace smnetcoreseed.web.Areas.Account.Controllers
                 unformattedKey);
         }
 
-        #endregion
+        #endregion Helpers
     }
 }
