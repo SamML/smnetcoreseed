@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -25,6 +26,44 @@ namespace smnetcoreseed.web
 {
     public class Startup
     {
+        public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<CoreIdentityDbContext>
+        {
+            public CoreIdentityDbContext CreateDbContext(string[] args)
+            {
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+
+                var builder = new DbContextOptionsBuilder<CoreIdentityDbContext>();
+
+                var connectionString = configuration.GetConnectionString("CoreIdentityDbContextConnection");
+
+                builder.UseSqlServer(connectionString);
+
+                return new CoreIdentityDbContext(builder.Options);
+            }
+        }
+        public class DesignTimeDbContextFactoryRepositories : IDesignTimeDbContextFactory<CoreRepositoriesDbContext>
+        {
+            public CoreRepositoriesDbContext CreateDbContext(string[] args)
+            {
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+
+                var builder = new DbContextOptionsBuilder<CoreRepositoriesDbContext>();
+
+                var connectionString = configuration.GetConnectionString("CoreRepositoriesDbContextConnection");
+
+                builder.UseSqlServer(connectionString);
+
+                return new CoreRepositoriesDbContext(builder.Options);
+            }
+        }
+
+
 
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
